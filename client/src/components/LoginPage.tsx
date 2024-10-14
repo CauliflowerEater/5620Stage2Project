@@ -3,6 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Input,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,25 +31,30 @@ const LoginPage = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={!!errors.userName}>
+      <FormControl isInvalid={!!errors.userName} position="relative">
         <FormLabel>UserName</FormLabel>
         <Input {...register("userName")} id="username" type="text" />
-        <FormErrorMessage>
+        <FormErrorMessage position="absolute" top="100%" left="0">
           {errors.userName && errors.userName.message}
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={!!errors.password} mt={4}>
+      <FormControl
+        isInvalid={!!errors.password}
+        mt={10}
+        position="relative"
+        width={300}
+      >
         <FormLabel>Password</FormLabel>
         <Input {...register("password")} id="password" type="password" />
-        <FormErrorMessage>
+        <FormErrorMessage position="absolute" top="100%" left="0">
           {errors.password && errors.password.message}
         </FormErrorMessage>
-
-        <Button type="submit" mt={4}>
-          Login
-        </Button>
       </FormControl>
+      <HStack mt={10} spacing={135}>
+        <Button type="submit">Login</Button>
+        <Button>Sign Up</Button>
+      </HStack>
     </form>
   );
 };
