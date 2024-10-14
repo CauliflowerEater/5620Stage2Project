@@ -1,6 +1,7 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import Logo from "./Logo";
 import NavBar from "./MainPageComponents/NavBar";
+import SetInformation from "./MainPageComponents/SetInformation";
 
 const MainPage = () => {
   return (
@@ -12,7 +13,6 @@ const MainPage = () => {
       h="100vh"
       w="100vw"
       color="blackAlpha.700"
-      bg="whiteAlpha.1000"
     >
       <GridItem pl="2" bg="orange.300" area={"header"}>
         <Logo />
@@ -23,8 +23,8 @@ const MainPage = () => {
           selectedPage={null}
         />
       </GridItem>
-      <GridItem pl="2" bg="red.400" area={"main"}>
-        Main
+      <GridItem pl="2" area={"main"}>
+        <SetInformation />
       </GridItem>
     </Grid>
   );
