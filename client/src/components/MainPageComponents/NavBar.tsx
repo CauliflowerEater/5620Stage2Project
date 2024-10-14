@@ -22,6 +22,7 @@ const NavBar = ({ selectedPage, onSelectedPage }: Props) => {
             bg={buttonId === selectedPage ? "whiteAlpha.900" : "yellow.900"}
             onClick={() => onSelectedPage(buttonId)}
             fontSize="lg"
+            width="90%"
           >
             {buttonId}
           </Button>
