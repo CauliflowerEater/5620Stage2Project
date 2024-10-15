@@ -1,15 +1,21 @@
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 const config: ThemeConfig = {
   initialColorMode: "light",
+  useSystemColorMode: false,
 };
 
 const theme = extendTheme({
   config,
-  colors: {
-    gray: {
-      50: "#f9f9f9",
-      100: "#ededed",
-      200: "#hehehe",
+  styles: {
+    global: {
+      body: {
+        bg: "white", // 设置浅色模式下的背景为白色
+        color: "black",
+        _dark: {
+          bg: "gray.800", // 深色模式的背景色
+          color: "white",
+        },
+      },
     },
   },
 });

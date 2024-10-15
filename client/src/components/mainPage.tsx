@@ -9,8 +9,7 @@ const MainPage = () => {
       templateAreas={`"header header""nav main"`}
       gridTemplateRows={"50px 1fr"}
       gridTemplateColumns={"200px 1fr"}
-      gap="1"
-      h="100vh"
+      gap={1}
       w="100vw"
       color="blackAlpha.700"
     >
@@ -23,7 +22,7 @@ const MainPage = () => {
           selectedPage={null}
         />
       </GridItem>
-      <GridItem pl="2" area={"main"}>
+      <GridItem area={"main"} maxWidth="100%">
         <SetInformation />
       </GridItem>
     </Grid>

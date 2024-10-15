@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -43,36 +44,74 @@ const DisplayAndInputField = ({ CurrentInform, InformType }: Props) => {
   const onSubmit = (data: FieldValues) => console.log(data);
 
   return (
-    <Box bg="green.300" w="98%" overflow="hidden">
+    <Box
+      w="98%"
+      overflow="hidden"
+      pl={2}
+      pb={10}
+      border="2px solid"
+      borderColor="whiteAlpha.900"
+      borderRadius="md"
+      color={"whiteAlpha.900"}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <h1>{InformType}</h1>
-        <List>
+        <List mt={10}>
+          <FormControl>
+            <FormLabel>Current {InformType}</FormLabel>
+          </FormControl>
           {CurrentInform?.map((Inform) => (
-            <ListItem paddingY="5px">
+            <ListItem mt={1}>
               <HStack>
-                <p>{Inform.description}</p>
-                <p>${Inform.amount}</p>
+                <Container
+                  border="1px solid"
+                  borderColor="whiteAlpha.400"
+                  borderRadius="md"
+                >
+                  {Inform.description}
+                </Container>
+                <Container
+                  border="1px solid"
+                  borderColor="whiteAlpha.400"
+                  borderRadius="md"
+                >
+                  ${Inform.amount}
+                </Container>
               </HStack>
             </ListItem>
           ))}
         </List>
-        <FormControl mt={5} isInvalid={!!errors.description}>
-          <FormLabel>{InformType} Description</FormLabel>
-          <Input {...register("description")} id="description" type="text" />
-          <FormErrorMessage position="absolute" top="100%" left="0">
-            {errors.description && errors.description.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl mt={5} isInvalid={!!errors.amount}>
-          <FormLabel>Amount</FormLabel>
-          <Input {...register("amount")} id="amount" type="number" />
-          <FormErrorMessage position="absolute" top="100%" left="0">
-            {errors.amount && errors.amount.message}
-          </FormErrorMessage>
-        </FormControl>
-        <Button mt={10} type="submit">
-          Submit new inform
-        </Button>
+        <HStack>
+          <FormControl mt={5} isInvalid={!!errors.description}>
+            <FormLabel>{InformType} Description</FormLabel>
+            <Input
+              {...register("description")}
+              id="description"
+              type="text"
+              width={300}
+            />
+            <FormErrorMessage position="absolute" top="100%" left="0">
+              {errors.description && errors.description.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl mt={5} isInvalid={!!errors.amount}>
+            <FormLabel>Amount</FormLabel>
+            <Input
+              {...register("amount")}
+              id="amount"
+              type="number"
+              width={300}
+            />
+            <FormErrorMessage position="absolute" top="100%" left="0">
+              {errors.amount && errors.amount.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl>
+            <Button mt={12} type="submit">
+              Submit new inform
+            </Button>
+          </FormControl>
+        </HStack>
       </form>
     </Box>
   );
