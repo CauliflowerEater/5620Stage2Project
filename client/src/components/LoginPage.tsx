@@ -7,8 +7,10 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import usePost from "../hooks/UsePost";
 
 const schema = z.object({
   userName: z
@@ -26,8 +28,14 @@ const LoginPage = () => {
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  //暂时输出提交的结果，后续补充账号验证函数.
-  const onSubmit = (data: FieldValues) => console.log(data);
+  const [postData, setPostData] = useState<FormData | null>(null);
+  //记得后续补上后端api。
+
+  const { data, error, isLoading } = usePost("后端endpoint", postData);
+
+  const onSubmit = (data: FormData) => {
+    setPostData(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
