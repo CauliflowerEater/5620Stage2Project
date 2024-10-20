@@ -27,14 +27,24 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
-
   const [postData, setPostData] = useState<FormData | null>(null);
-  //记得后续补上后端api。
 
-  const { data, error, isLoading } = usePost("后端endpoint", postData);
+  //前后端的数据交互还有问题，就是这里
+  const { status, message, error } = usePost("login", postData, undefined, [
+    postData,
+  ]);
 
   const onSubmit = (data: FormData) => {
+    console.log(data);
     setPostData(data);
+    if (status === 200) {
+      console.log("执行页面跳转和主页status变换");
+      console.log(message);
+    }
+    if (!(status === 200) && !(status === 0)) {
+      console.log("登录失败");
+      console.log(message);
+    }
   };
 
   return (
@@ -62,6 +72,9 @@ const LoginPage = () => {
       <HStack mt={10} spacing={135}>
         <Button type="submit">Login</Button>
         <Button>Sign Up</Button>
+        <FormErrorMessage position="absolute" top="100%" left="0">
+          {error}
+        </FormErrorMessage>
       </HStack>
     </form>
   );

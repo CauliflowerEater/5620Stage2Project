@@ -2,40 +2,43 @@ import { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
 import apiClient from "../components/services/api-client";
 
-const usePost = <T>(
+interface ApiResponse {
+  message: string;
+}
+
+const usePost = (
   endpoint: string,
   postData: any,
   requestConfig?: AxiosRequestConfig,
   deps?: any[]
 ) => {
   const controller = new AbortController();
-  const [data, setData] = useState<T | null>(null);
+  const [status, setStatus] = useState(0);
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
 
   useEffect(
     () => {
-      //当postData为空时停止
+      console.log("usePost is working");
       if (!postData) return;
-      setLoading(true);
       apiClient
-        .post<T>(endpoint, postData, {
+        .post<ApiResponse>(endpoint, postData, {
           signal: controller.signal,
           ...requestConfig,
         })
         .then((res) => {
-          setData(res.data);
-          setLoading(false);
+          setStatus(res.status);
+          setMessage(res.data.message);
         })
         .catch((err) => {
           if (err instanceof CanceledError) return;
           setError(err.message);
-          setLoading(false);
         });
     },
     deps ? [...deps] : []
   );
-  return { data, error, isLoading };
+  console.log({ status, message, error });
+  return { status, message, error };
 };
 
 export default usePost;
