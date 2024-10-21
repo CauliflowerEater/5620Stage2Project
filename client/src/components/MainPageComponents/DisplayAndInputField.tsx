@@ -11,11 +11,14 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
+import { useState } from "react";
 import { z } from "zod";
+import useGet from "../../hooks/useGet";
+import PostSender from "../PostSender";
 interface Props {
-  CurrentInform: FinInform[] | null;
+  endpoint: string;
   InformType: string;
 }
 
@@ -34,14 +37,23 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const DisplayAndInputField = ({ CurrentInform, InformType }: Props) => {
+const DisplayAndInputField = ({ endpoint, InformType }: Props) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FieldValues) => console.log(data);
+  //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。
+  const { data, error, isLoading } = useGet<FinInform[]>(endpoint);
+
+  //POST
+  const [status, setStatus] = useState(0);
+  const [message, setMessage] = useState("");
+  const [err, setError] = useState("");
+
+  const onSubmit = PostSender;
+  //这里因为简化省略了对statuscode和error信息的显示.
 
   return (
     <Box
@@ -54,13 +66,17 @@ const DisplayAndInputField = ({ CurrentInform, InformType }: Props) => {
       borderRadius="md"
       color={"whiteAlpha.900"}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit((FromData) =>
+          onSubmit(endpoint, FromData, setStatus, setMessage, setError)
+        )}
+      >
         <h1>{InformType}</h1>
         <List mt={10}>
           <FormControl>
             <FormLabel>Current {InformType}</FormLabel>
           </FormControl>
-          {CurrentInform?.map((Inform) => (
+          {data?.map((Inform) => (
             <ListItem mt={1}>
               <HStack>
                 <Container

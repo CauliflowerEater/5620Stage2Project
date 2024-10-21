@@ -1,3 +1,4 @@
+//未处理GET,POST操作的status,message,error等信息。
 import {
   Box,
   Button,
@@ -11,9 +12,12 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
+import { useState } from "react";
 import { z } from "zod";
+import useGet from "../../hooks/useGet";
+import PostSender from "../PostSender";
 interface Props {
   CurrentInform: GoalInform[] | null;
 }
@@ -24,6 +28,7 @@ export interface GoalInform {
   amount: number;
   date: string;
 }
+const endpoint = "goals";
 
 const schema = z.object({
   description: z.string().min(1, { message: "Please write some description" }),
@@ -38,14 +43,23 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const DisplayAndInputGoals = ({ CurrentInform }: Props) => {
+const DisplayAndInputGoals = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FieldValues) => console.log(data);
+  //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。
+  const { data, error, isLoading } = useGet<GoalInform[]>(endpoint);
+
+  //POST
+  const [status, setStatus] = useState(0);
+  const [message, setMessage] = useState("");
+  const [err, setError] = useState("");
+
+  const onSubmit = PostSender;
+  //这里因为简化省略了对statuscode和error信息的显示.
 
   return (
     <Box
@@ -58,13 +72,17 @@ const DisplayAndInputGoals = ({ CurrentInform }: Props) => {
       borderRadius="md"
       color={"whiteAlpha.900"}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit((FormData) =>
+          onSubmit(endpoint, FormData, setStatus, setMessage, setError)
+        )}
+      >
         <h1>Goal</h1>
         <List mt={10}>
           <FormControl>
             <FormLabel>Current Goal</FormLabel>
           </FormControl>
-          {CurrentInform?.map((Inform) => (
+          {data?.map((Inform) => (
             <ListItem mt={1}>
               <HStack>
                 <Container
