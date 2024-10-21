@@ -60,7 +60,7 @@ const LoginPage = () => {
   return (
     <form
       onSubmit={handleSubmit((FormData) =>
-        onSubmit("Login", FormData, setStatus, setMessage, setError)
+        onSubmit("login", FormData, setStatus, setMessage, setError)
       )}
     >
       <FormControl isInvalid={!!errors.userName} position="relative">

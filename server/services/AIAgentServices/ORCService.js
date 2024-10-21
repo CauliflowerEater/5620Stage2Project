@@ -62,10 +62,7 @@ Make sure the information is accurate. If you can't recognize the text, leave it
 
     return result;
   } catch (error) {
-    console.error(
-      `Error: ${error.response ? error.response.data : error.message}`
-    );
-    return;
+    throw new Error(error.response ? error.response.data : error.message);
   }
 }
 module.exports = ORCService;
