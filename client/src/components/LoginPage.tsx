@@ -7,10 +7,10 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import usePost from "../hooks/UsePost";
+import PostSender from "./PostSender";
 
 const schema = z.object({
   userName: z
@@ -27,28 +27,42 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
-  const [postData, setPostData] = useState<FormData | null>(null);
+  const [status, setStatus] = useState(0);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  //前后端的数据交互还有问题，就是这里
-  const { status, message, error } = usePost("login", postData, undefined, [
-    postData,
-  ]);
+  //用useEffect检测更新登录状态
+  useEffect(() => {
+    if (status != 0) console.log(status);
+    if (message) console.log(message);
+    if (error) console.log(error);
+  }, [status, message, error]);
+  //用纯method的交互方案
+  const onSubmit = PostSender;
+  //用useEffect的交互方案
+  // const { status, message, error } = usePost("login", postData, undefined, [
+  //   postData,
+  // ]);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    setPostData(data);
-    if (status === 200) {
-      console.log("执行页面跳转和主页status变换");
-      console.log(message);
-    }
-    if (!(status === 200) && !(status === 0)) {
-      console.log("登录失败");
-      console.log(message);
-    }
-  };
+  // const onSubmit = (data: FormData) => {
+  //   console.log(data);
+  //   setPostData(data);
+  //   if (status === 200) {
+  //     console.log("执行页面跳转和主页status变换");
+  //     console.log(message);
+  //   }
+  //   if (!(status === 200) && !(status === 0)) {
+  //     console.log("登录失败");
+  //     console.log(message);
+  //   }
+  // };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit((FormData) =>
+        onSubmit("Login", FormData, setStatus, setMessage, setError)
+      )}
+    >
       <FormControl isInvalid={!!errors.userName} position="relative">
         <FormLabel>UserName</FormLabel>
         <Input {...register("userName")} id="username" type="text" />
