@@ -2,7 +2,9 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import { useState } from "react";
 import Logo from "./Logo";
 import AccountBook from "./MainPageComponents/AccountBook";
+import AdviceReport from "./MainPageComponents/AdviceReport";
 import BookKeeping from "./MainPageComponents/BookKeeping";
+import ConditionReport from "./MainPageComponents/ConditionReport";
 import NavBar from "./MainPageComponents/NavBar";
 import SetInformation from "./MainPageComponents/SetInformation";
 
@@ -16,6 +18,10 @@ const MainPage = () => {
     mainContent = <AccountBook />;
   } else if (currentPage === "BookKeeping") {
     mainContent = <BookKeeping />;
+  } else if (currentPage === "ConditionReport") {
+    mainContent = <ConditionReport />;
+  } else if (currentPage === "AdviceReport") {
+    mainContent = <AdviceReport />;
   }
 
   return (
