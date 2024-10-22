@@ -9,7 +9,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "white", // 设置浅色模式下的背景为白色
+        bg: "black", // 设置浅色模式下的背景为白色
         color: "black",
         _dark: {
           bg: "gray.800", // 深色模式的背景色
