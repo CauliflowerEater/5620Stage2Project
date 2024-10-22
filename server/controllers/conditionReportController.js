@@ -25,7 +25,7 @@ const getConditionReportsController = async (req, res) => {
     const { userId } = req.params;
 
     try {
-        const reports = getConditionReports(userId);
+        const reports = await getConditionReports(userId);
         res.status(200).json(reports);
     } catch (error) {
         res.status(400).json({ message: error.message });
