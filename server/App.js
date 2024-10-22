@@ -10,6 +10,7 @@ const debtRoutes = require("./routes/debtRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const goalRoutes = require("./routes/goalRoutes");
 require("module-alias/register"); //快捷定义引用目录
+const { swaggerUi, swaggerSpec } = require("./swagger"); //For REST API in Swagger
 
 dotenv.config();
 
@@ -36,9 +37,11 @@ app.use("/api", propertyRoutes);
 app.use("/api", conditionReportRoutes);
 app.use("/api", incomeRoutes);
 app.use("/api", goalRoutes);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // 启动服务器
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log("API Docs available at http://localhost:5000/api-docs");
 });

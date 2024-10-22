@@ -1,9 +1,9 @@
 const { storeAdviceReport, getAdviceReports } = require("../services/userServices/adviceReportService");
 
 /**
- * 存储 advice report 的控制器
- * @param {Object} req - 请求对象，包含 userId 参数和 report 数据
- * @param {Object} res - 响应对象，用于返回存储状态
+ * Controller to store an advice report
+ * @param {Object} req - The request object containing userId in the params and report data in the body
+ * @param {Object} res - The response object used to return the status
  */
 const storeAdviceReportController = async (req, res) => {
   const { userId } = req.params;
@@ -18,9 +18,9 @@ const storeAdviceReportController = async (req, res) => {
 };
 
 /**
- * 获取用户的 advice reports 控制器
- * @param {Object} req - 请求对象，包含 userId 参数
- * @param {Object} res - 响应对象，用于返回用户的 advice reports
+ * Controller to get a user's advice reports
+ * @param {Object} req - The request object containing userId in the params
+ * @param {Object} res - The response object used to return the user's advice reports
  */
 const getAdviceReportsController = async (req, res) => {
   const { userId } = req.params;
@@ -34,9 +34,9 @@ const getAdviceReportsController = async (req, res) => {
 };
 
 /**
- * 获取 DataPool 中的 advice reports 控制器
- * @param {Object} req - 请求对象
- * @param {Object} res - 响应对象，用于返回 DataPool 中的 advice reports
+ * Controller to get all advice reports from DataPool
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object used to return the advice reports from DataPool
  */
 const getAdviceReportsFromDataPoolController = async (req, res) => {
     try {
