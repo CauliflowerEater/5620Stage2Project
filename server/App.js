@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/config"); // 连接数据库的代码
 const userRoutes = require("./routes/userRoutes"); // 引入路由
+const aiAgentRoutes = require("./routes/aiAgentRoutes");
 require("module-alias/register"); //快捷定义引用目录
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(
 
 // 使用路由
 app.use("/api", userRoutes);
+app.use("/api", aiAgentRoutes);
 
 // 启动服务器
 const PORT = process.env.PORT || 5000;

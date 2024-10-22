@@ -1,4 +1,3 @@
-const { string } = require("zod");
 const User = require("../../models/User");
 
 const Login = async (userName, password) => {
