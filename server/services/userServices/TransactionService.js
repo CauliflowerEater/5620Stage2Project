@@ -23,5 +23,26 @@ const getTransactionRecords = async (userId) => {
         date: record.date,
     }));
 };
+const setTransactionRecord = async (userId, transactions) => {
+    const user = await User.findById(userId);
+    console.log(transactions);
+    if (!user) {
+        throw new Error("User not found");
+    }
 
-module.exports = { getTransactionRecords };
+    // 检查传入的每一个 transaction 是否包含所需的字段
+    transactions.forEach((transaction) => {
+        if (!transaction.title || !transaction.transactionType || !transaction.amount || !transaction.date) {
+            throw new Error("Each transaction must include title, transactionType, amount, and date");
+        }
+    });
+
+    // 将新的交易记录添加到用户的 accountbook 中
+    user.accountbook.push(...transactions);
+
+    // 保存用户信息
+    await user.save();
+
+    return user;
+};
+module.exports = { getTransactionRecords,setTransactionRecord };

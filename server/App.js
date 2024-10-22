@@ -9,6 +9,7 @@ const propertyRoutes = require("./routes/propertyRoutes");
 const debtRoutes = require("./routes/debtRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const goalRoutes = require("./routes/goalRoutes");
+const tansactionsRoutes = require("./routes/tansactionsRoutes");
 require("module-alias/register"); //快捷定义引用目录
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use("/api", propertyRoutes);
 app.use("/api", conditionReportRoutes);
 app.use("/api", incomeRoutes);
 app.use("/api", goalRoutes);
+app.use("/api", tansactionsRoutes);
 
 // 启动服务器
 const PORT = process.env.PORT || 5000;
