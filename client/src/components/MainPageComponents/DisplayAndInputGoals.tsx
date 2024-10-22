@@ -18,6 +18,7 @@ import { useState } from "react";
 import { z } from "zod";
 import useGet from "../../hooks/useGet";
 import PostSender from "../PostSender";
+import { GoalEndPoint } from "../services/endpoints";
 interface Props {
   CurrentInform: GoalInform[] | null;
 }
@@ -28,7 +29,7 @@ export interface GoalInform {
   amount: number;
   date: string;
 }
-const endpoint = "goals";
+const endpoint = GoalEndPoint;
 
 const schema = z.object({
   description: z.string().min(1, { message: "Please write some description" }),
