@@ -1,16 +1,5 @@
 const mongoose = require("mongoose");
 
-const dataPoolSchema = new mongoose.Schema({
-  condtionReports: {
-    type: [conditionReportSchem],
-    required: false,
-  },
-  adviceReports: {
-    type: [adviceReportSchema],
-    required: false,
-  },
-});
-
 const conditionReportSchem = mongoose.Schema({
   content: {
     type: String,
@@ -37,6 +26,17 @@ const adviceReportSchema = mongoose.Schema({
   date: {
     type: Date,
     required: true,
+  },
+});
+
+const dataPoolSchema = new mongoose.Schema({
+  condtionReports: {
+    type: [conditionReportSchem],
+    required: false,
+  },
+  adviceReports: {
+    type: [adviceReportSchema],
+    required: false,
   },
 });
 

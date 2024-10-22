@@ -1,6 +1,7 @@
 const loginService = require("../services/userServices/loginService");
 const registerService = require("../services/userServices/registerService");
-
+// controllers/transactionController.js
+const { getTransactionRecords } = require("../services/userServices/transactionService");
 const loginUser = async (req, res) => {
   const { userName, password } = req.body;
   try {
@@ -21,4 +22,16 @@ const registerUser = async (req, res) => {
   }
 };
 
+/**
+ * 获取指定用户的交易记录的控制器
+ */
+const getTransactionRecordsController = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const transactionRecords = getTransactionRecords(userId);
+    res.status(200).json(transactionRecords);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 module.exports = { loginUser, registerUser };
