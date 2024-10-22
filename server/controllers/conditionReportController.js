@@ -33,4 +33,18 @@ const getConditionReportsController = async (req, res) => {
     }
 };
 
-module.exports = { storeConditionReportController, getConditionReportsController };
+/**
+ * 获取 DataPool 中的 condition reports 控制器
+ * @param {Object} req - 请求对象
+ * @param {Object} res - 响应对象，用于返回 DataPool 中的 condition reports
+ */
+const getConditionReportsFromDataPoolController = async (req, res) => {
+    try {
+        const reports = await getConditionReportsFromDataPool();
+        res.status(200).json(reports);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+module.exports = { storeConditionReportController, getConditionReportsController, getConditionReportsFromDataPoolController };

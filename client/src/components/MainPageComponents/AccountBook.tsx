@@ -2,6 +2,7 @@
 import { Box, Container, HStack, List, ListItem } from "@chakra-ui/react";
 
 import useGet from "../../hooks/useGet";
+import { TransactionRecordEndPoint } from "../services/endpoints";
 
 export interface TransactionRecord {
   id: string;
@@ -10,7 +11,7 @@ export interface TransactionRecord {
   amount: number;
   date: Date;
 }
-const endpoint = "transactionRecords";
+const endpoint = TransactionRecordEndPoint;
 
 const AccountBook = () => {
   //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。

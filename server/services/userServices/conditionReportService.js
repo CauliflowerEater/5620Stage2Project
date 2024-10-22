@@ -55,4 +55,22 @@ const getConditionReports = async (userId) => {
     }));
 };
 
-module.exports = { storeConditionReport, getConditionReports };
+/**
+ * 从 DataPool 获取所有 condition reports
+ * @returns {Array} - DataPool 中的 condition reports 列表
+ * @throws {Error} - 如果 DataPool 不存在或其他错误
+ */
+const getConditionReportsFromDataPool = async () => {
+    const dataPool = await DataPool.findOne().select("conditionReports");
+
+    if (!dataPool) {
+        throw new Error("DataPool not found");
+    }
+
+    return dataPool.conditionReports.map((report) => ({
+        content: report.content,
+        date: report.date,
+    }));
+};
+
+module.exports = { storeConditionReport, getConditionReports, getConditionReportsFromDataPool };
