@@ -25,14 +25,14 @@ interface Props {
 
 export interface GoalInform {
   id: string;
-  description: string;
+  title: string;
   amount: number;
   date: string;
 }
 const endpoint = GoalEndPoint;
 
 const schema = z.object({
-  description: z.string().min(1, { message: "Please write some description" }),
+  title: z.string().min(1, { message: "Please write some title" }),
   amount: z.preprocess(
     (val) => Number(val),
     z.number().min(0, { message: "The value must be larger or equal to 0." })
@@ -48,18 +48,33 @@ const DisplayAndInputGoals = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  //刷新按钮
+  const [refresh, setRefresh] = useState(false);
+
   //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。
-  const { data, error, isLoading } = useGet<GoalInform[]>(endpoint);
+  const { data, error, isLoading } = useGet<GoalInform[]>(endpoint, undefined, [
+    refresh,
+  ]);
 
   //POST
   const [status, setStatus] = useState(0);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
   const [err, setError] = useState("");
 
-  const onSubmit = PostSender;
+  const refreshButton = () => {
+    setRefresh(!refresh);
+    setMessage(null);
+  };
+
+  const onSubmit = (Data: FormData) => {
+    console.log(Data);
+    PostSender(endpoint, Data, setStatus, setMessage, setError);
+    reset();
+  };
   //这里因为简化省略了对statuscode和error信息的显示.
 
   return (
@@ -73,12 +88,14 @@ const DisplayAndInputGoals = () => {
       borderRadius="md"
       color={"whiteAlpha.900"}
     >
-      <form
-        onSubmit={handleSubmit((FormData) =>
-          onSubmit(endpoint, FormData, setStatus, setMessage, setError)
-        )}
-      >
-        <h1>Goal</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <HStack justifyContent={"space-between"}>
+          <h1>Goal</h1>
+          <Button onClick={refreshButton} mt={5} mr={5}>
+            Refresh
+          </Button>
+        </HStack>
+
         <List mt={10}>
           <FormControl>
             <FormLabel>Current Goal</FormLabel>
@@ -91,7 +108,7 @@ const DisplayAndInputGoals = () => {
                   borderColor="whiteAlpha.400"
                   borderRadius="md"
                 >
-                  {Inform.description}
+                  {Inform.title}
                 </Container>
                 <Container
                   border="1px solid"
@@ -113,22 +130,18 @@ const DisplayAndInputGoals = () => {
         </List>
 
         <HStack>
-          <FormControl
-            mt={5}
-            position="relative"
-            isInvalid={!!errors.description}
-          >
-            <FormLabel>Goal Description</FormLabel>
-            <Input {...register("description")} id="description" type="text" />
+          <FormControl mt={5} position="relative" isInvalid={!!errors.title}>
+            <FormLabel>Goal title</FormLabel>
+            <Input {...register("title")} id="title" type="text" />
             <FormErrorMessage position="absolute" top="100%" left="0">
-              {errors.description && errors.description.message}
+              {errors.title && errors.title.message}
             </FormErrorMessage>
           </FormControl>
 
           <FormControl mt={5} position="relative" isInvalid={!!errors.amount}>
             <FormLabel>Amount</FormLabel>
             <Input
-              {...register("amount")}
+              {...register("amount", { valueAsNumber: true })}
               id="amount"
               type="number"
               defaultValue={0}
@@ -140,12 +153,20 @@ const DisplayAndInputGoals = () => {
 
           <FormControl mt={5}>
             <FormLabel>Date</FormLabel>
-            <Input {...register("date")} id="date" type="date" w={200} />
+            <Input
+              {...register("date", { valueAsDate: true })}
+              id="date"
+              type="date"
+              w={200}
+            />
           </FormControl>
           <FormControl mt={12}>
             <Button type="submit">Submit new inform</Button>
           </FormControl>
         </HStack>
+        <FormLabel position={"absolute"} color="red.200">
+          {message ? message : null}
+        </FormLabel>
       </form>
     </Box>
   );

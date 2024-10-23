@@ -129,6 +129,7 @@ const DisplayAndInputField = ({ endpoint, InformType }: Props) => {
               id="amount"
               type="number"
               width={300}
+              defaultValue={0}
             />
             <FormErrorMessage position="absolute" top="100%" left="0">
               {errors.amount && errors.amount.message}
