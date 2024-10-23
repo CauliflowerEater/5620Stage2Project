@@ -5,7 +5,7 @@ interface ApiResponse {
   message: string;
 }
 
-const PostSender = (
+const PostSender = async (
   endpoint: string,
   postData: any,
   setStatus: (code: number) => void,
@@ -15,8 +15,8 @@ const PostSender = (
 ) => {
   const controller = new AbortController();
 
-  console.log("PostSender is working");
   if (!postData) return;
+  console.log("PostSender is working");
   apiClient
     .post<ApiResponse>(endpoint, postData, {
       signal: controller.signal,
