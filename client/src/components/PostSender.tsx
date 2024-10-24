@@ -29,7 +29,7 @@ const PostSender = async (
     })
     .catch((err) => {
       if (err instanceof CanceledError) return;
-      if (err.response.data) {
+      if (err.response) {
         setStatus(err.status);
         setError(err.response.data.message);
       }

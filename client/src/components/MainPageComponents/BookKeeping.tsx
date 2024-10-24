@@ -4,7 +4,6 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  FormLabel,
   HStack,
   Input,
 } from "@chakra-ui/react";
@@ -13,13 +12,16 @@ import { useForm } from "react-hook-form";
 
 import { useState } from "react";
 import { z } from "zod";
+import FileCompresser from "../../toals/FileCompresser";
 import PostSender from "../PostSender";
-import { ReceiptEndPoint } from "../services/Endpoints";
+import { ReceiptEndPoint } from "../services/endpoints";
 
 const endpoint = ReceiptEndPoint;
 
 const schema = z.object({
-  receipt: z.string().min(1, { message: "Please choose an image" }),
+  receipt: z.any().refine((file) => 1 === 1, {
+    message: "Please upload a valid file",
+  }),
 });
 type FormData = z.infer<typeof schema>;
 
@@ -30,18 +32,30 @@ const BookKeeping = () => {
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [compressedImage, setCompressedImage] = useState<string | null>(null);
+
+  //Genrate的时候将图片转为strng64
+  const String64Transformer = (image: File | null) => {
+    if (image) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setCompressedImage(reader.result as string);
+      };
+      reader.readAsDataURL(image);
+    }
+  };
+
+  String64Transformer(
+    FileCompresser(selectedImage, [selectedImage]).compression
+  );
 
   //上传图片时触发事件
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setSelectedImage(file);
     }
   };
 
@@ -50,7 +64,21 @@ const BookKeeping = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [err, setError] = useState("");
 
-  const onSubmit = PostSender;
+  const onSubmit = (Data: FormData) => {
+    console.log(Data);
+    console.log({ receipt: selectedImage });
+
+    const formData = new FormData();
+    if (selectedImage) formData.append("receipt", selectedImage);
+
+    PostSender(
+      endpoint,
+      formData, //上传的requestbody为{receipt:image}
+      setStatus,
+      setMessage,
+      setError
+    );
+  };
   //这里因为简化省略了对statuscode和error信息的显示.
 
   return (
@@ -64,21 +92,10 @@ const BookKeeping = () => {
       borderRadius="md"
       color={"whiteAlpha.900"}
     >
-      <form
-        onSubmit={handleSubmit(() =>
-          onSubmit(
-            endpoint,
-            { receipt: selectedImage }, //上传的requestbody为64位化的图片
-            setStatus,
-            setMessage,
-            setError
-          )
-        )}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h1>BookKeeping</h1>
         <HStack>
           <FormControl mt={5} position="relative" isInvalid={!!errors.receipt}>
-            <FormLabel>Goal Description</FormLabel>
             <Input
               {...register("receipt")}
               id="receipt"
@@ -95,8 +112,15 @@ const BookKeeping = () => {
             <Button type="submit">Generate Records!</Button>
           </FormControl>
         </HStack>
-        <FormControl mt={5} position="relative">
-          {selectedImage && <img src={selectedImage} alt="selected" />}
+        <FormControl mt={5} position="relative" marginTop={10}>
+          {compressedImage && (
+            <img
+              src={compressedImage}
+              alt="selected"
+              width={300}
+              height={300}
+            />
+          )}
           <FormErrorMessage>{message}</FormErrorMessage>
         </FormControl>
       </form>

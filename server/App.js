@@ -24,9 +24,13 @@ connectDB();
 // 中间件
 app.use(express.json()); // 解析JSON请求
 
+// 中间件
+app.use(express.json({ limit: "50mb" })); // 允许最多 50MB 的 JSON 数据
+app.use(express.urlencoded({ limit: "50mb", extended: true })); // 允许最多 50MB 的 URL-encoded 数据
+
 app.use(
   cors({
-    "*": "http://localhost:5173",
+    origin: "*",
   })
 );
 
@@ -40,7 +44,6 @@ app.use("/api", incomeRoutes);
 app.use("/api", goalRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", tansactionsRoutes);
-
 
 // 启动服务器
 const PORT = process.env.PORT || 5000;

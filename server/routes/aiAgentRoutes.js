@@ -1,7 +1,8 @@
 const express = require("express");
 const { analyzeReceipt } = require("../controllers/AIAgentController");
+const { image } = require("framer-motion/client");
 const router = express.Router();
-
+const multer = require("multer");
 
 /**
  * @swagger
@@ -43,6 +44,9 @@ const router = express.Router();
  *                   type: string
  *                   example: Error message
  */
-router.post("/receipt", analyzeReceipt);
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+router.post("/receipt", upload.single("receipt"), analyzeReceipt);
 
 module.exports = router;

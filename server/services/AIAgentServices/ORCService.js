@@ -1,12 +1,44 @@
 // Import necessary modules
 const axios = require("axios");
 const path = require("path");
+const mutler = require("multer");
+const multer = require("multer");
+const fs = require("fs");
 
 // Load environment variables
 require("dotenv").config();
 
+const upload = multer({ storage: multer.memoryStorage() });
+
+// Function: 将文件转换为 Base64 编码
+function fileToBase64(file) {
+  try {
+    // 确保文件存在
+    if (!file) {
+      console.log("no file uploaded");
+    }
+
+    // 检查 buffer 是否存在
+    if (!file.buffer) {
+      console.log("File buffer is undefined");
+    }
+
+    // 将文件 buffer 转换为 Base64
+    const base64Image = file.buffer.toString("base64"); // 可能出错的地方
+    console.log("Base64 Image: ", base64Image);
+
+    console.log("image process successfully");
+  } catch (error) {
+    console.log(error);
+  }
+  // file.buffer 是从 multer 获取的文件的二进制数据
+  return file.buffer.toString("base64");
+}
+
 // Function: OCR Processing
-async function ORCService(b64img, apiKey = null) {
+async function ORCService(image, apiKey = null) {
+  const b64img = fileToBase64(image);
+
   // Get the OpenAI API Key
   if (!apiKey) {
     apiKey = process.env.OPENAI_API_KEY;

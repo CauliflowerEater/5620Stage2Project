@@ -29,3 +29,4 @@ Thumbs.db
 *.sln
 *.sw?
 >>>>>>> e0cae5ed0d97a3a46edd02670946be3ca5a168b7
+server/.env
