@@ -6,6 +6,21 @@ During the development process, our team always follows an agile approach. By co
 To support the functionality and performance of the application, the user interface of the program is built using React in the front-end and back-end frameworks to achieve a responsive and interactive user experience, while the back-end is powered by Express.
 At the same time, cloud services ensure smooth deployment and efficient data processing. In this part, we used AWS for scalable and reliable cloud hosting. In terms of deployment and CI/CD, we used Docker to manage continuous integration and deployment, so as to achieve seamless updates and reliable performance in different environments. Finally, optical character recognition (OCR) technology was used to automatically extract data from physical receipts and documents, which greatly facilitated users to record their daily consumption habits.
 
+#Deployment
+1.Extract files.
+
+2.Start the backend:
+  a) Navigate to the server folder.
+  b) In the terminal, enter npm install to install dependencies.
+  c) Once installed, enter npm run dev to start the server.
+  
+3.Start the frontend:
+  a) Navigate to the client folder.
+  b) In the terminal, enter npm install to install dependencies.
+  c) Once installed, enter npm run dev to start the frontend.
+Usage: The login screen is for demonstration purposes only. Enter a username with more than 6 characters and a password with more than 4 characters to log in.After entering some financial information on the main page, you can generate a report.
+
+Note: If there are issues with generating reports and reading receipts but not with reading information, it may be due to an expired AI API key. In this case, contact the development team to replace the API key. The API key is located in /server/.env.
 
 # Advanced Technologies
 - React: This tool helps build the parts of the software that users interact with, making it feel fast and responsive. When users click through to view reports or input expenses, React keeps things snappy and easy to navigate.
