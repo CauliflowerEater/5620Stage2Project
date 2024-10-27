@@ -8,6 +8,55 @@ At the same time, the application uses LLM to analyze financial data and generat
 During the development process, our team always follows an agile approach. By combining iterative development cycles, feedback loops, and regular team collaboration, we ensure continuous improvement and response to feedback to create products that meet changing needs and user expectations.  
 To support the functionality and performance of the application, the user interface of the program is built using React in the front-end and back-end frameworks to achieve a responsive and interactive user experience, while the back-end is powered by Express.
 At the same time, cloud services ensure smooth deployment and efficient data processing. In this part, we used AWS for scalable and reliable cloud hosting. In terms of deployment and CI/CD, we used Docker to manage continuous integration and deployment, so as to achieve seamless updates and reliable performance in different environments. Finally, optical character recognition (OCR) technology was used to automatically extract data from physical receipts and documents, which greatly facilitated users to record their daily consumption habits.   
+
+# Configuration
+
+- **Environment Variables**
+    
+    Configure environment variables in the backend `.env` file to store sensitive information securely and efficiently. Example variables include:
+    
+    - **AI_API_KEY**: Set for LLM access and updated as needed to prevent expiry.
+    - **MONGO_DB_URI**: Connection URI for MongoDB.
+    - **AWS_ACCESS_KEY_ID** and **AWS_SECRET_ACCESS_KEY**: Authentication for AWS services.
+    - **OCR_API_KEY**: API key to activate OCR capabilities for receipt reading.
+- **LLM Hyperparameters**
+    
+    To ensure quality and efficiency in generating financial advice reports, the LLM model operates with adjusted hyperparameters such as:
+    
+    - **max_tokens**: Limits the token count for each response, balancing processing time and data quality.
+    - **temperature**: Controls response creativity, allowing for more analytical responses when set to a lower value (e.g., 0.3).
+    - **top_p**: Ensures a balanced probability distribution for coherent output, recommended to set to 0.8-1.
+- **Frontend Configurations (React)**
+    
+    In `client/src/config.js`, configuration settings for connecting to backend endpoints, managing API requests, and defining UI/UX settings:
+    
+    - **BASE_API_URL**: Backend API URL for easy API call management.
+    - **AUTO_SAVE_INTERVAL**: Set intervals for auto-saving user inputs and preventing data loss.
+- **Backend Configurations (Express)**
+    
+    The backend in Express handles routing, APIs, and LLM data processing. Recommended configurations include:
+    
+    - **Body Parsing Limits**: To manage large file uploads for OCR, adjust the body parser to handle larger payloads.
+    - **Request Timeout**: Configure an appropriate request timeout in Express to handle LLM processing without session timeouts.
+- **Docker Configurations**
+    
+    For a consistent runtime environment across development and production, Docker files are set up with:
+    
+    - **Docker Compose**: Orchestrates multi-container setup for database, backend, and frontend services.
+    - **Environment Variables in Docker**: Integrate environment-specific variables for staging, testing, and production.
+- **CI/CD Settings**
+    
+    Continuous integration is facilitated through Docker-based CI/CD pipelines with settings for automatic deployment. Key settings include:
+    
+    - **Build Automation**: Automatic builds triggered on merge to main branch.
+    - **Health Checks**: Docker containers configured with health checks for service readiness before deployment.
+- **Cloud Configuration (AWS)**
+    
+    AWS configurations support scalable and secure application deployment:
+    
+    - **EC2 Instance Sizing**: Set the instance types based on user traffic and data requirements.
+    - **S3 Bucket Policies**: Secure policies for receipt and backup storage.
+    - **Auto-scaling Policies**: Trigger scaling based on load, ensuring availability for high-traffic scenarios.
  
 # Deployment
 
