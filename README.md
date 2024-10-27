@@ -11,23 +11,32 @@ At the same time, cloud services ensure smooth deployment and efficient data pro
  
 # Deployment
 
-1.Extract files.  
+1. Extract files.  
 
-2.Start the backend:
-  a) Navigate to the server folder.  
-  b) In the terminal, first install dependencies:
-  ```bash
-  npm install
-  ```
-  c) Once installed, enter npm run dev to start the server.  
+2. Start the backend:
+  + Navigate to the server folder.
+  + In the terminal, first install dependencies:
+    ```bash
+    npm install
+    ```
+  + Once installed, start the server:
+    ```bash
+    node App.js
+    ```
   
-3.Start the frontend:
-  a) Navigate to the client folder.  
-  b) In the terminal, enter npm install to install dependencies.  
-  c) Once installed, enter npm run dev to start the frontend.  
+3. Start the frontend:
+  + Navigate to the client folder.
+  + In the terminal, first install dependencies:
+    ```bash
+    npm install
+    ``` 
+  + Once installed, start the frontend:
+    ```bash
+    npm run dev
+    ``` 
 Usage: The login screen is for demonstration purposes only. Enter a username with more than 6 characters and a password with more than 4 characters to log in.After entering some financial information on the main page, you can generate a report.  
 
-Note: If there are issues with generating reports and reading receipts but not with reading information, it may be due to an expired AI API key. In this case, contact the development team to replace the API key. The API key is located in /server/.env.
+Note: If there are issues with generating reports and reading receipts but not with reading information, it may be due to an expired **AI API key**. In this case, contact the development team to replace the **API key**. The API key is located in `/server/.env`.
 
 # Advanced Technologies
 
