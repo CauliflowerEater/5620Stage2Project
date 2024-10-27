@@ -5,3 +5,8 @@ At the same time, the application uses LLM to analyze financial data and generat
 During the development process, our team always follows an agile approach. By combining iterative development cycles, feedback loops, and regular team collaboration, we ensure continuous improvement and response to feedback to create products that meet changing needs and user expectations.
 To support the functionality and performance of the application, the user interface of the program is built using React in the front-end and back-end frameworks to achieve a responsive and interactive user experience, while the back-end is powered by Express.
 At the same time, cloud services ensure smooth deployment and efficient data processing. In this part, we used AWS for scalable and reliable cloud hosting. In terms of deployment and CI/CD, we used Jenkins and Docker to manage continuous integration and deployment, so as to achieve seamless updates and reliable performance in different environments. Finally, optical character recognition (OCR) technology was used to automatically extract data from physical receipts and documents, which greatly facilitated users to record their daily consumption habits.
+
+
+# Advanced Technologies
++ **AWS:**
+AWS allows us to remotely access resources such as servers, storage, databases, and networks via the internet, reducing our dependence on local servers. After we deploy our website, it can be accessed directly through the internet, rather than being limited to a local network. Using AWS enables us to deploy and manage applications more efficiently.
