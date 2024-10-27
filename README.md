@@ -15,7 +15,10 @@ At the same time, cloud services ensure smooth deployment and efficient data pro
 
 2.Start the backend:
   a) Navigate to the server folder.  
-  b) In the terminal, enter ```npm install``` to install dependencies.  
+  b) In the terminal, first install dependencies:
+  ```bash
+  npm install
+  ```
   c) Once installed, enter npm run dev to start the server.  
   
 3.Start the frontend:
