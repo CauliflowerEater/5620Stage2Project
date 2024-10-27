@@ -1,6 +1,5 @@
 const express = require("express");
 const { analyzeReceipt } = require("../controllers/AIAgentController");
-const { image } = require("framer-motion/client");
 const router = express.Router();
 const multer = require("multer");
 
