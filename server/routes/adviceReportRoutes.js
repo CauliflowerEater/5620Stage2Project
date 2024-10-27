@@ -1,15 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const {
-    storeAdviceReportController,
-    getAdviceReportsController, 
-    getAdviceReportsFromDataPoolController
+  storeAdviceReportController,
+  getAdviceReportsController,
+  getAdviceReportsFromDataPoolController,
+  generateAdviceReportController,
 } = require("../controllers/adviceReportController");
 
 // Routes for operation about advice reports
 /**
  * @swagger
- * /users/{userId}/advice-reports:
+ * /users/{userId}/advice-reports/generate:
  *   post:
  *     summary: Store a new advice report for a user
  *     description: This API stores a new advice report for a user based on their userId.
@@ -42,7 +43,10 @@ const {
  *       400:
  *         description: Error in storing advice report
  */
-router.post("/users/:userId/advice-reports", storeAdviceReportController);
+router.get(
+  "/users/:userId/advice-reports/generate",
+  generateAdviceReportController
+);
 
 /**
  * @swagger

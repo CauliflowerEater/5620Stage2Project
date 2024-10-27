@@ -23,10 +23,6 @@ function fileToBase64(file) {
       console.log("File buffer is undefined");
     }
 
-    // 将文件 buffer 转换为 Base64
-    const base64Image = file.buffer.toString("base64"); // 可能出错的地方
-    console.log("Base64 Image: ", base64Image);
-
     console.log("image process successfully");
   } catch (error) {
     console.log(error);
@@ -60,13 +56,13 @@ async function ORCService(image, apiKey = null) {
           {
             type: "text",
             text: `
-Here is a base64 encoded image of a receipt. For each item, please classify it into "food","chemist","entertainment","transportation","others" one of these five types,Please analyze it and return the details in the following JSON format:
+Here is a base64 encoded image of a receipt. For each item, please classify it into "food","chemist","entertainment","transportation","others" one of these five types.title means the product name, amount means product price. Please analyze it and return aJSON array:
 [
     {
-        "item name": ,
-        "type":,
-        "price": ,
-        "transaction time":,
+        "title": ,
+        "transactionType":,
+        "amount": ,
+        "date":,
     },
     ...
 ]

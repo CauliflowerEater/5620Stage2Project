@@ -25,6 +25,7 @@ const useGet = <T>(
           setLoading(false);
         })
         .catch((err) => {
+          console.log(err);
           if (err instanceof CanceledError) return;
           setError(err.message);
           setLoading(false);

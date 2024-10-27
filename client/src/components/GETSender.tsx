@@ -14,18 +14,20 @@ const GETSender = (
 ) => {
   const controller = new AbortController();
 
-  console.log("PostSender is working");
+  console.log("GETSender is working");
   apiClient
     .get<ApiResponse>(endpoint, {
       signal: controller.signal,
       ...requestConfig,
     })
     .then((res) => {
+      console.log(res);
       //   console.log(res.status + " " + res.data.message);
       setStatus(res.status);
       setMessage(res.data.message);
     })
     .catch((err) => {
+      console.log(err);
       if (err instanceof CanceledError) return;
       if (err.response.data) {
         setStatus(err.status);

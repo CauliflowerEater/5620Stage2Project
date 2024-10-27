@@ -16,7 +16,6 @@ const storeAdviceReport = async (userId, reportData) => {
 
   // Create new advice report object
   const newReport = {
-    adviceType: reportData.adviceType,
     content: reportData.content,
     date: reportData.date,
   };
@@ -57,17 +56,20 @@ const getAdviceReports = async (userId) => {
  * @throws {Error} - If DataPool not found
  */
 const getAdviceReportsFromDataPool = async () => {
-    const dataPool = await DataPool.findOne().select("adviceReports");
-    if (!dataPool) {
-      throw new Error("DataPool not found");
-    }
-  
-    // Return array of adviceReports in the DataPool, Format [{ content, date }]
-    return dataPool.adviceReports.map(report => ({
-      content: report.content,
-      date: report.date,
-    }));
-  };
+  const dataPool = await DataPool.findOne().select("adviceReports");
+  if (!dataPool) {
+    throw new Error("DataPool not found");
+  }
 
+  // Return array of adviceReports in the DataPool, Format [{ content, date }]
+  return dataPool.adviceReports.map((report) => ({
+    content: report.content,
+    date: report.date,
+  }));
+};
 
-module.exports = { storeAdviceReport, getAdviceReports, getAdviceReportsFromDataPool };
+module.exports = {
+  storeAdviceReport,
+  getAdviceReports,
+  getAdviceReportsFromDataPool,
+};

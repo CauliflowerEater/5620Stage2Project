@@ -1,14 +1,18 @@
 import {
+  Box,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   HStack,
   Input,
+  VStack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import PostSender from "./PostSender";
 
@@ -30,6 +34,8 @@ const LoginPage = () => {
   const [status, setStatus] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   //用useEffect检测更新登录状态
   useEffect(() => {
@@ -58,39 +64,65 @@ const LoginPage = () => {
   // };
 
   return (
-    <form
-      onSubmit={handleSubmit((FormData) =>
-        onSubmit("login", FormData, setStatus, setMessage, setError)
-      )}
+    <Box
+      w="100%"
+      maxW="400px"
+      mx="auto"
+      p={8}
+      borderWidth={1}
+      borderRadius="lg"
+      boxShadow="lg"
+      bg="gray.700"
+      color="whiteAlpha.900"
     >
-      <FormControl isInvalid={!!errors.userName} position="relative">
-        <FormLabel>UserName</FormLabel>
-        <Input {...register("userName")} id="username" type="text" />
-        <FormErrorMessage position="absolute" top="100%" left="0">
-          {errors.userName && errors.userName.message}
-        </FormErrorMessage>
-      </FormControl>
+      <Heading size="lg" mb={6} textAlign="center">
+        Sign In
+      </Heading>
 
-      <FormControl
-        isInvalid={!!errors.password}
-        mt={10}
-        position="relative"
-        width={300}
+      <form
+        onSubmit={handleSubmit((formData) => {
+          onSubmit("login", formData, setStatus, setMessage, setError);
+          if (isValid) {
+            navigate("/mainpage");
+          }
+        })}
       >
-        <FormLabel>Password</FormLabel>
-        <Input {...register("password")} id="password" type="password" />
-        <FormErrorMessage position="absolute" top="100%" left="0">
-          {errors.password && errors.password.message}
-        </FormErrorMessage>
-      </FormControl>
-      <HStack mt={10} spacing={135}>
-        <Button type="submit">Login</Button>
-        <Button>Sign Up</Button>
-        <FormErrorMessage position="absolute" top="100%" left="0">
-          {error}
-        </FormErrorMessage>
-      </HStack>
-    </form>
+        <VStack spacing={6} align="stretch">
+          <FormControl isInvalid={!!errors.userName}>
+            <FormLabel>UserName</FormLabel>
+            <Input {...register("userName")} id="username" type="text" />
+            <FormErrorMessage>{errors.userName?.message}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.password}>
+            <FormLabel>Password</FormLabel>
+            <Input {...register("password")} id="password" type="password" />
+            <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+          </FormControl>
+
+          {error && (
+            <FormErrorMessage color="red.300" fontSize="sm" textAlign="center">
+              {error}
+            </FormErrorMessage>
+          )}
+
+          <HStack justifyContent="center" w="full" pt={4}>
+            <Button type="submit" colorScheme="teal" w="full">
+              Login
+            </Button>
+            <Button
+              colorScheme="teal"
+              w="full"
+              onClick={() => {
+                navigate("/signuppage");
+              }}
+            >
+              SignUp
+            </Button>
+          </HStack>
+        </VStack>
+      </form>
+    </Box>
   );
 };
 

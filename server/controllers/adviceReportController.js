@@ -1,4 +1,10 @@
-const { storeAdviceReport, getAdviceReports } = require("../services/userServices/adviceReportService");
+const {
+  generateAdviceReport,
+} = require("../services/AIAgentServices/AdviceReportService");
+const {
+  storeAdviceReport,
+  getAdviceReports,
+} = require("../services/userServices/adviceReportService");
 
 /**
  * Controller to store an advice report
@@ -11,6 +17,18 @@ const storeAdviceReportController = async (req, res) => {
 
   try {
     await storeAdviceReport(userId, { adviceType, content, date });
+    res.status(200).json({ message: "Advice report stored successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const generateAdviceReportController = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const report = await generateAdviceReport(userId);
+    console.log(report);
+    await storeAdviceReport(userId, report);
     res.status(200).json({ message: "Advice report stored successfully" });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -39,12 +57,17 @@ const getAdviceReportsController = async (req, res) => {
  * @param {Object} res - The response object used to return the advice reports from DataPool
  */
 const getAdviceReportsFromDataPoolController = async (req, res) => {
-    try {
-      const reports = await getAdviceReportsFromDataPool();
-      res.status(200).json(reports);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  };
+  try {
+    const reports = await getAdviceReportsFromDataPool();
+    res.status(200).json(reports);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
-module.exports = { storeAdviceReportController, getAdviceReportsController, getAdviceReportsFromDataPoolController  };
+module.exports = {
+  storeAdviceReportController,
+  getAdviceReportsController,
+  getAdviceReportsFromDataPoolController,
+  generateAdviceReportController,
+};

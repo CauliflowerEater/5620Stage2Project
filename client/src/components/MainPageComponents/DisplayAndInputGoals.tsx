@@ -6,10 +6,13 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   HStack,
   Input,
   List,
   ListItem,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -81,78 +84,99 @@ const DisplayAndInputGoals = () => {
     <Box
       w="98%"
       overflow="hidden"
-      pl={2}
-      pb={10}
+      p={6}
       border="2px solid"
       borderColor="whiteAlpha.900"
       borderRadius="md"
-      color={"whiteAlpha.900"}
+      color="whiteAlpha.900"
+      bg="gray.800"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <HStack justifyContent={"space-between"}>
-          <h1>Goal</h1>
-          <Button onClick={refreshButton} mt={5} mr={5}>
+        <HStack justifyContent="space-between" mb={5}>
+          <Heading as="h2" size="md" color="whiteAlpha.900">
+            Goal
+          </Heading>
+          <Button onClick={refreshButton} colorScheme="teal">
             Refresh
           </Button>
         </HStack>
 
-        <List mt={10}>
+        <VStack align="start" spacing={6} mb={8}>
           <FormControl>
-            <FormLabel>Current Goal</FormLabel>
+            <FormLabel fontSize="lg" color="whiteAlpha.800">
+              Current Goals
+            </FormLabel>
+            <List spacing={3} w="full">
+              {data?.map((Inform, index) => (
+                <ListItem key={index} w="full">
+                  <HStack spacing={4}>
+                    <Container
+                      border="1px solid"
+                      borderColor="whiteAlpha.400"
+                      borderRadius="md"
+                      p={2}
+                      bg="gray.700"
+                      color="whiteAlpha.900"
+                      w="full"
+                      textAlign="center"
+                    >
+                      {Inform.title}
+                    </Container>
+                    <Container
+                      border="1px solid"
+                      borderColor="whiteAlpha.400"
+                      borderRadius="md"
+                      p={2}
+                      bg="gray.700"
+                      color="whiteAlpha.900"
+                      w="full"
+                      textAlign="center"
+                    >
+                      ${Inform.amount}
+                    </Container>
+                    <Container
+                      border="1px solid"
+                      borderColor="whiteAlpha.400"
+                      borderRadius="md"
+                      p={2}
+                      bg="gray.700"
+                      color="whiteAlpha.900"
+                      w="full"
+                      textAlign="center"
+                    >
+                      {new Date(Inform.date).toLocaleDateString()}
+                    </Container>
+                  </HStack>
+                </ListItem>
+              ))}
+            </List>
           </FormControl>
-          {data?.map((Inform) => (
-            <ListItem mt={1}>
-              <HStack>
-                <Container
-                  border="1px solid"
-                  borderColor="whiteAlpha.400"
-                  borderRadius="md"
-                >
-                  {Inform.title}
-                </Container>
-                <Container
-                  border="1px solid"
-                  borderColor="whiteAlpha.400"
-                  borderRadius="md"
-                >
-                  ${Inform.amount}
-                </Container>
-                <Container
-                  border="1px solid"
-                  borderColor="whiteAlpha.400"
-                  borderRadius="md"
-                >
-                  {Inform.date}
-                </Container>
-              </HStack>
-            </ListItem>
-          ))}
-        </List>
+        </VStack>
 
-        <HStack>
-          <FormControl mt={5} position="relative" isInvalid={!!errors.title}>
-            <FormLabel>Goal title</FormLabel>
+        <VStack spacing={4} align="start">
+          <FormControl isInvalid={!!errors.title}>
+            <FormLabel color="whiteAlpha.800">Goal Title</FormLabel>
             <Input {...register("title")} id="title" type="text" />
-            <FormErrorMessage position="absolute" top="100%" left="0">
+            <FormErrorMessage>
               {errors.title && errors.title.message}
             </FormErrorMessage>
           </FormControl>
 
-          <FormControl mt={5} position="relative" isInvalid={!!errors.amount}>
-            <FormLabel>Amount</FormLabel>
+          <FormControl isInvalid={!!errors.amount}>
+            <FormLabel color="whiteAlpha.800">Amount</FormLabel>
             <Input
               {...register("amount", { valueAsNumber: true })}
               id="amount"
               type="number"
               defaultValue={0}
             />
-            <FormErrorMessage position="absolute" top="100%" left="0">
+            <FormErrorMessage>
               {errors.amount && errors.amount.message}
             </FormErrorMessage>
           </FormControl>
 
-          <FormControl mt={5}>
-            <FormLabel>Date</FormLabel>
+          <FormControl>
+            <FormLabel color="whiteAlpha.800">Date</FormLabel>
             <Input
               {...register("date", { valueAsDate: true })}
               id="date"
@@ -160,13 +184,17 @@ const DisplayAndInputGoals = () => {
               w={200}
             />
           </FormControl>
-          <FormControl mt={12}>
-            <Button type="submit">Submit new inform</Button>
-          </FormControl>
-        </HStack>
-        <FormLabel position={"absolute"} color="red.200">
-          {message ? message : null}
-        </FormLabel>
+
+          <Button type="submit" colorScheme="teal" mt={4} alignSelf="flex-end">
+            Submit New Goal
+          </Button>
+        </VStack>
+
+        {message && (
+          <Text mt={4} color="red.200" fontSize="sm">
+            {message}
+          </Text>
+        )}
       </form>
     </Box>
   );

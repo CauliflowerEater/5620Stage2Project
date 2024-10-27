@@ -9,6 +9,8 @@ import {
   Input,
   List,
   ListItem,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -73,57 +75,74 @@ const DisplayAndInputField = ({ endpoint, InformType }: Props) => {
   return (
     <Box
       w="98%"
-      overflow="hidden"
-      pl={2}
-      pb={10}
+      p={6}
       border="2px solid"
       borderColor="whiteAlpha.900"
       borderRadius="md"
-      color={"whiteAlpha.900"}
+      color="whiteAlpha.900"
+      bg="gray.800"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <HStack justifyContent={"space-between"}>
-          <h1>{InformType}</h1>
-          <Button mt={5} mr={5} onClick={refreshButton}>
+        <HStack justifyContent="space-between" mb={5}>
+          <Text fontSize="2xl" fontWeight="bold" color="whiteAlpha.900">
+            {InformType}
+          </Text>
+          <Button colorScheme="teal" onClick={refreshButton}>
             Refresh
           </Button>
         </HStack>
 
-        <List mt={10}>
+        <VStack align="start" spacing={6} mb={8}>
           <FormControl>
-            <FormLabel>Current {InformType}</FormLabel>
+            <FormLabel fontSize="lg" color="whiteAlpha.800">
+              Current {InformType}
+            </FormLabel>
+            <List spacing={3} w="full">
+              {data?.map((Inform, index) => (
+                <ListItem key={index} w="full">
+                  <HStack spacing={4}>
+                    <Container
+                      border="1px solid"
+                      borderColor="whiteAlpha.400"
+                      borderRadius="md"
+                      p={2}
+                      bg="gray.700"
+                      color="whiteAlpha.900"
+                      textAlign="center"
+                      w="50%"
+                    >
+                      {Inform.title}
+                    </Container>
+                    <Container
+                      border="1px solid"
+                      borderColor="whiteAlpha.400"
+                      borderRadius="md"
+                      p={2}
+                      bg="gray.700"
+                      color="whiteAlpha.900"
+                      textAlign="center"
+                      w="50%"
+                    >
+                      ${Inform.amount}
+                    </Container>
+                  </HStack>
+                </ListItem>
+              ))}
+            </List>
           </FormControl>
-          {data?.map((Inform) => (
-            <ListItem mt={1}>
-              <HStack>
-                <Container
-                  border="1px solid"
-                  borderColor="whiteAlpha.400"
-                  borderRadius="md"
-                >
-                  {Inform.title}
-                </Container>
-                <Container
-                  border="1px solid"
-                  borderColor="whiteAlpha.400"
-                  borderRadius="md"
-                >
-                  ${Inform.amount}
-                </Container>
-              </HStack>
-            </ListItem>
-          ))}
-        </List>
-        <HStack>
-          <FormControl mt={5} isInvalid={!!errors.title}>
-            <FormLabel>{InformType} title</FormLabel>
+        </VStack>
+
+        <VStack spacing={4} align="start">
+          <FormControl isInvalid={!!errors.title}>
+            <FormLabel color="whiteAlpha.800">{InformType} Title</FormLabel>
             <Input {...register("title")} id="title" type="text" width={300} />
-            <FormErrorMessage position="absolute" top="100%" left="0">
+            <FormErrorMessage>
               {errors.title && errors.title.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl mt={5} isInvalid={!!errors.amount}>
-            <FormLabel>Amount</FormLabel>
+
+          <FormControl isInvalid={!!errors.amount}>
+            <FormLabel color="whiteAlpha.800">Amount</FormLabel>
             <Input
               {...register("amount", { valueAsNumber: true })}
               id="amount"
@@ -131,19 +150,21 @@ const DisplayAndInputField = ({ endpoint, InformType }: Props) => {
               width={300}
               defaultValue={0}
             />
-            <FormErrorMessage position="absolute" top="100%" left="0">
+            <FormErrorMessage>
               {errors.amount && errors.amount.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl>
-            <Button mt={12} type="submit">
-              Submit new inform
-            </Button>
-          </FormControl>
-        </HStack>
-        <FormLabel position={"absolute"} color="red.200">
-          {message ? message : ""}
-        </FormLabel>
+
+          <Button type="submit" colorScheme="teal" mt={4} alignSelf="flex-end">
+            Submit New Inform
+          </Button>
+        </VStack>
+
+        {message && (
+          <Text mt={4} color="red.200" fontSize="sm">
+            {message}
+          </Text>
+        )}
       </form>
     </Box>
   );

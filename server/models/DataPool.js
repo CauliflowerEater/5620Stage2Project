@@ -13,11 +13,6 @@ const conditionReportSchem = mongoose.Schema({
 });
 
 const adviceReportSchema = mongoose.Schema({
-  adviceType: {
-    type: String,
-    trim: true,
-    required: true,
-  },
   content: {
     type: String,
     trim: true,

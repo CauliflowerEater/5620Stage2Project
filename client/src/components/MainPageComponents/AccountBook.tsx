@@ -1,5 +1,14 @@
 //AccountBook 仅保留的展示功能，没有手动记账的功能。
-import { Box, Container, HStack, List, ListItem } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Heading,
+  HStack,
+  List,
+  ListItem,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import useGet from "../../hooks/useGet";
 import { TransactionRecordEndPoint } from "../services/endpoints";
@@ -34,43 +43,42 @@ const AccountBook = () => {
       pb={10}
       borderColor="whiteAlpha.900"
       borderRadius="md"
-      color={"whiteAlpha.900"}
-      height="100vh"
+      color="whiteAlpha.900"
+      width="100%"
+      bg="gray.800"
+      p={5}
     >
-      <h1>AccountBook</h1>
-      <List mt={10}>
-        {data?.map((record) => (
-          <ListItem mt={1}>
-            <HStack>
-              <Container
-                border="1px solid"
-                borderColor="whiteAlpha.400"
-                borderRadius="md"
-              >
-                {record.title}
-              </Container>
-              <Container
-                border="1px solid"
-                borderColor="whiteAlpha.400"
-                borderRadius="md"
-              >
-                ${record.type}
-              </Container>
-              <Container
-                border="1px solid"
-                borderColor="whiteAlpha.400"
-                borderRadius="md"
-              >
-                {record.amount}
-              </Container>
-              <Container
-                border="1px solid"
-                borderColor="whiteAlpha.400"
-                borderRadius="md"
-              >
-                {record.date}
-              </Container>
-            </HStack>
+      <Heading size="lg" color="whiteAlpha.900" mb={5} textAlign="center">
+        AccountBook
+      </Heading>
+
+      <List mt={10} spacing={4}>
+        {data?.map((record, index) => (
+          <ListItem key={index}>
+            <Container
+              border="1px solid"
+              borderColor="whiteAlpha.400"
+              borderRadius="md"
+              p={4}
+              bg="gray.700"
+              color="whiteAlpha.900"
+              shadow="md"
+              width="100%"
+            >
+              <VStack align="start" spacing={2}>
+                <Text fontWeight="bold">
+                  Title:{" "}
+                  <Text as="span" fontWeight="normal">
+                    {record.title}
+                  </Text>
+                </Text>
+                <HStack justify="space-between" width="100%">
+                  <Text>Type: {record.type}</Text>
+                  <Text>Amount: ${record.amount}</Text>
+                  <Text>Date: {record.date}</Text>
+                </HStack>
+              </VStack>
+            </Container>
           </ListItem>
         ))}
       </List>

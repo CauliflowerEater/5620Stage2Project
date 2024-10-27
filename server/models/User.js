@@ -1,3 +1,4 @@
+const { title } = require("framer-motion/client");
 const mongoose = require("mongoose");
 
 const goalSchema = new mongoose.Schema({
@@ -56,6 +57,11 @@ const debtSchema = new mongoose.Schema({
 });
 
 const transactionRecordSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    trim: true,
+    required: true,
+  },
   transactionType: {
     type: String,
     trim: true,
@@ -85,11 +91,6 @@ const conditionReportSchema = new mongoose.Schema({
 });
 
 const adviceReportSchema = new mongoose.Schema({
-  adviceType: {
-    type: String,
-    trim: true,
-    required: true,
-  },
   content: {
     type: String,
     trim: true,
