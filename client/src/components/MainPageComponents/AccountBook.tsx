@@ -69,7 +69,7 @@ const AccountBook = () => {
                   <HStack justify="space-between" width="100%">
                     <Text>Type: {record.type}</Text>
                     <Text>Amount: ${record.amount}</Text>
-                    <Text>Date: {record.date.toISOString()}</Text>
+                    <Text>Date: {JSON.stringify(record.date)}</Text>
                   </HStack>
                 </VStack>
               </Container>
