@@ -56,7 +56,7 @@ async function ORCService(image, apiKey = null) {
           {
             type: "text",
             text: `
-Here is a base64 encoded image of a receipt. For each item, please classify it into "food","chemist","entertainment","transportation","others" one of these five types.title means the product name, amount means product price. Please analyze it and return aJSON array:
+Here is a base64 encoded image of a receipt. For each item, please classify it into "food","chemist","entertainment","transportation","others" one of these five types.title means the product name, amount means product price,and date should be MM/DD/YYYY format. Please analyze it and return aJSON array:
 [
     {
         "title": ,
