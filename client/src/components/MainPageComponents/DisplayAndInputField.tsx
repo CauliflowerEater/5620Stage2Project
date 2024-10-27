@@ -44,16 +44,14 @@ const DisplayAndInputField = ({ endpoint, InformType }: Props) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   //控制刷新控件的useState
   const [refresh, setRefresh] = useState(false);
 
   //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。
-  const { data, error, isLoading } = useGet<FinInform[]>(endpoint, undefined, [
-    refresh,
-  ]);
+  const { data } = useGet<FinInform[]>(endpoint, undefined, [refresh]);
 
   //POST
   const [status, setStatus] = useState(0);
@@ -64,6 +62,8 @@ const DisplayAndInputField = ({ endpoint, InformType }: Props) => {
   const refreshButton = () => {
     setRefresh(!refresh);
     setMessage(null);
+    console.log(status);
+    console.log(err);
   };
   const onSubmit = (Data: FormData) => {
     console.log(Data);

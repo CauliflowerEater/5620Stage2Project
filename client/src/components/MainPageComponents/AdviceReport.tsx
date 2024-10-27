@@ -36,9 +36,7 @@ const AdviceReport = () => {
   };
 
   //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。
-  const { data, error, isLoading } = useGet<report[]>(endpoint, undefined, [
-    refresh,
-  ]);
+  const { data, isLoading } = useGet<report[]>(endpoint, undefined, [refresh]);
 
   //这里因为简化省略了对statuscode和error信息的显示.
 

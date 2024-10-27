@@ -22,9 +22,6 @@ import { z } from "zod";
 import useGet from "../../hooks/useGet";
 import PostSender from "../PostSender";
 import { GoalEndPoint } from "../services/endpoints";
-interface Props {
-  CurrentInform: GoalInform[] | null;
-}
 
 export interface GoalInform {
   id: string;
@@ -52,16 +49,14 @@ const DisplayAndInputGoals = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   //刷新按钮
   const [refresh, setRefresh] = useState(false);
 
   //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。
-  const { data, error, isLoading } = useGet<GoalInform[]>(endpoint, undefined, [
-    refresh,
-  ]);
+  const { data } = useGet<GoalInform[]>(endpoint, undefined, [refresh]);
 
   //POST
   const [status, setStatus] = useState(0);
@@ -71,6 +66,7 @@ const DisplayAndInputGoals = () => {
   const refreshButton = () => {
     setRefresh(!refresh);
     setMessage(null);
+    console.log(status, err);
   };
 
   const onSubmit = (Data: FormData) => {

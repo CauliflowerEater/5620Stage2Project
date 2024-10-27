@@ -1,7 +1,7 @@
 import imageCompression from "browser-image-compression";
 import { useEffect, useState } from "react";
 
-const FileCompresser = <T>(image: File | null, deps?: any[]) => {
+const FileCompresser = (image: File | null, deps?: any[]) => {
   const [compression, setCompression] = useState<File | null>(null);
 
   useEffect(

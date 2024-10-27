@@ -3,7 +3,7 @@ import {
   DebtEndPoint,
   IncomeEndPoint,
   PropertyEndPoint,
-} from "../services/Endpoints";
+} from "../services/endpoints";
 import DisplayAndInputField from "./DisplayAndInputField";
 import DisplayAndInputGoals from "./DisplayAndInputGoals";
 

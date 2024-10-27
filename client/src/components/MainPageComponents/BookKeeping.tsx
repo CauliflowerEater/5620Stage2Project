@@ -18,13 +18,14 @@ import { useForm } from "react-hook-form";
 
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
+import FileCompresser from "../../toals/FileCompresser";
 import PostSender from "../PostSender";
 import { ReceiptEndPoint } from "../services/endpoints";
 
 const endpoint = ReceiptEndPoint;
 
 const schema = z.object({
-  receipt: z.any().refine((file) => 1 === 1, {
+  receipt: z.any().refine(() => 1 === 1, {
     message: "Please upload a valid file",
   }),
 });
@@ -34,27 +35,27 @@ const BookKeeping = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
 
-  // //Genrate的时候将图片转为strng64
-  // const String64Transformer = (image: File | null) => {
-  //   if (image) {
-  //     const reader = new FileReader();
+  //Genrate的时候将图片转为strng64
+  const String64Transformer = (image: File | null) => {
+    if (image) {
+      const reader = new FileReader();
 
-  //     reader.onloadend = () => {
-  //       setCompressedImage(reader.result as string);
-  //     };
-  //     reader.readAsDataURL(image);
-  //   }
-  // };
+      reader.onloadend = () => {
+        setCompressedImage(reader.result as string);
+      };
+      reader.readAsDataURL(image);
+    }
+  };
 
-  // String64Transformer(
-  //   FileCompresser(selectedImage, [selectedImage]).compression
-  // );
+  String64Transformer(
+    FileCompresser(selectedImage, [selectedImage]).compression
+  );
 
   //上传图片时触发事件
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,6 +86,7 @@ const BookKeeping = () => {
     console.log(Data);
     console.log({ receipt: selectedImage });
 
+    console.log(err);
     const formData = new FormData();
     if (selectedImage) formData.append("receipt", selectedImage);
 
@@ -121,7 +123,7 @@ const BookKeeping = () => {
               onChange={handleImageChange}
             />
             <FormErrorMessage position="absolute" top="100%" left="0">
-              {errors.receipt && errors.receipt.message}
+              {errors.receipt && errors.receipt.message?.toString()}
             </FormErrorMessage>
           </FormControl>
 

@@ -24,16 +24,7 @@ const endpoint = TransactionRecordEndPoint;
 
 const AccountBook = () => {
   //这里是获取目标的endpoint,同时注意在这里更新useEffect的重加载依赖。
-  const { data, error, isLoading } = useGet<TransactionRecord[]>(endpoint);
-
-  //测试数据
-  //   const testRecord = {
-  //     title: "shit",
-  //     type: "food",
-  //     amount: 10000,
-  //     date: new Date().toString(),
-  //   };
-  //   const testData = [testRecord, testRecord];
+  const { data } = useGet<TransactionRecord[]>(endpoint);
 
   return (
     <Box
@@ -78,7 +69,7 @@ const AccountBook = () => {
                   <HStack justify="space-between" width="100%">
                     <Text>Type: {record.type}</Text>
                     <Text>Amount: ${record.amount}</Text>
-                    <Text>Date: {record.date}</Text>
+                    <Text>Date: {record.date.toISOString()}</Text>
                   </HStack>
                 </VStack>
               </Container>
