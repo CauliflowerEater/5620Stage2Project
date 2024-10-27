@@ -1,24 +1,25 @@
-![image](https://github.com/user-attachments/assets/b1795697-28bc-452c-ac64-e77ceb6633ee)# Project Overview
-In this project, we innovatively designed an intelligent bookkeeping and financial advice analysis application that combines a large language model (LLM). It will generate detailed financial status and financial advice reports based on the information provided by the user. The development of this project follows an agile and open process and incorporates advanced technologies, leaving a lot of room for expansion for the technical team.
-Based on the first phase of the architecture design, the application provides basic bookkeeping functions as well as artificial intelligence financial reports. Users can easily manage their financial records and get smart customized advice for their financial situation.
-At the same time, the application uses LLM to analyze financial data and generate comprehensive reports. This feature enhances the application's ability to interpret data, make suggestions, and help users make wise financial decisions, effectively adding value beyond standard bookkeeping tools.
-During the development process, our team always follows an agile approach. By combining iterative development cycles, feedback loops, and regular team collaboration, we ensure continuous improvement and response to feedback to create products that meet changing needs and user expectations.
+![image](https://github.com/user-attachments/assets/b1795697-28bc-452c-ac64-e77ceb6633ee) 
+# Project Overview
+In this project, we innovatively designed an intelligent bookkeeping and financial advice analysis application that combines a large language model (LLM). It will generate detailed financial status and financial advice reports based on the information provided by the user. The development of this project follows an agile and open process and incorporates advanced technologies, leaving a lot of room for expansion for the technical team.  
+Based on the first phase of the architecture design, the application provides basic bookkeeping functions as well as artificial intelligence financial reports. Users can easily manage their financial records and get smart customized advice for their financial situation.  
+At the same time, the application uses LLM to analyze financial data and generate comprehensive reports. This feature enhances the application's ability to interpret data, make suggestions, and help users make wise financial decisions, effectively adding value beyond standard bookkeeping tools.  
+During the development process, our team always follows an agile approach. By combining iterative development cycles, feedback loops, and regular team collaboration, we ensure continuous improvement and response to feedback to create products that meet changing needs and user expectations.  
 To support the functionality and performance of the application, the user interface of the program is built using React in the front-end and back-end frameworks to achieve a responsive and interactive user experience, while the back-end is powered by Express.
-At the same time, cloud services ensure smooth deployment and efficient data processing. In this part, we used AWS for scalable and reliable cloud hosting. In terms of deployment and CI/CD, we used Docker to manage continuous integration and deployment, so as to achieve seamless updates and reliable performance in different environments. Finally, optical character recognition (OCR) technology was used to automatically extract data from physical receipts and documents, which greatly facilitated users to record their daily consumption habits.
-
-#Deployment
-1.Extract files.
+At the same time, cloud services ensure smooth deployment and efficient data processing. In this part, we used AWS for scalable and reliable cloud hosting. In terms of deployment and CI/CD, we used Docker to manage continuous integration and deployment, so as to achieve seamless updates and reliable performance in different environments. Finally, optical character recognition (OCR) technology was used to automatically extract data from physical receipts and documents, which greatly facilitated users to record their daily consumption habits.   
+ 
+# Deployment
+1.Extract files.  
 
 2.Start the backend:
-  a) Navigate to the server folder.
-  b) In the terminal, enter npm install to install dependencies.
-  c) Once installed, enter npm run dev to start the server.
+  a) Navigate to the server folder.  
+  b) In the terminal, enter npm install to install dependencies.  
+  c) Once installed, enter npm run dev to start the server.  
   
 3.Start the frontend:
-  a) Navigate to the client folder.
-  b) In the terminal, enter npm install to install dependencies.
-  c) Once installed, enter npm run dev to start the frontend.
-Usage: The login screen is for demonstration purposes only. Enter a username with more than 6 characters and a password with more than 4 characters to log in.After entering some financial information on the main page, you can generate a report.
+  a) Navigate to the client folder.  
+  b) In the terminal, enter npm install to install dependencies.  
+  c) Once installed, enter npm run dev to start the frontend.  
+Usage: The login screen is for demonstration purposes only. Enter a username with more than 6 characters and a password with more than 4 characters to log in.After entering some financial information on the main page, you can generate a report.  
 
 Note: If there are issues with generating reports and reading receipts but not with reading information, it may be due to an expired AI API key. In this case, contact the development team to replace the API key. The API key is located in /server/.env.
 
