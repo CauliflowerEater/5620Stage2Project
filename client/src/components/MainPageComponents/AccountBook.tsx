@@ -53,34 +53,37 @@ const AccountBook = () => {
       </Heading>
 
       <List mt={10} spacing={4}>
-        {data?.map((record, index) => (
-          <ListItem key={index}>
-            <Container
-              border="1px solid"
-              borderColor="whiteAlpha.400"
-              borderRadius="md"
-              p={4}
-              bg="gray.700"
-              color="whiteAlpha.900"
-              shadow="md"
-              width="100%"
-            >
-              <VStack align="start" spacing={2}>
-                <Text fontWeight="bold">
-                  Title:{" "}
-                  <Text as="span" fontWeight="normal">
-                    {record.title}
+        {data
+          ?.slice()
+          .reverse()
+          .map((record, index) => (
+            <ListItem key={index}>
+              <Container
+                border="1px solid"
+                borderColor="whiteAlpha.400"
+                borderRadius="md"
+                p={4}
+                bg="gray.700"
+                color="whiteAlpha.900"
+                shadow="md"
+                width="100%"
+              >
+                <VStack align="start" spacing={2}>
+                  <Text fontWeight="bold">
+                    Title:{" "}
+                    <Text as="span" fontWeight="normal">
+                      {record.title}
+                    </Text>
                   </Text>
-                </Text>
-                <HStack justify="space-between" width="100%">
-                  <Text>Type: {record.type}</Text>
-                  <Text>Amount: ${record.amount}</Text>
-                  <Text>Date: {record.date}</Text>
-                </HStack>
-              </VStack>
-            </Container>
-          </ListItem>
-        ))}
+                  <HStack justify="space-between" width="100%">
+                    <Text>Type: {record.type}</Text>
+                    <Text>Amount: ${record.amount}</Text>
+                    <Text>Date: {record.date}</Text>
+                  </HStack>
+                </VStack>
+              </Container>
+            </ListItem>
+          ))}
       </List>
     </Box>
   );

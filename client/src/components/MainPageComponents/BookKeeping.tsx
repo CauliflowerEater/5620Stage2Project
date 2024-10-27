@@ -1,5 +1,11 @@
 //未处理GET,POST操作的status,message,error等信息。
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   FormControl,
@@ -10,9 +16,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import FileCompresser from "../../toals/FileCompresser";
 import PostSender from "../PostSender";
 import { ReceiptEndPoint } from "../services/endpoints";
 
@@ -35,21 +40,21 @@ const BookKeeping = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
 
-  //Genrate的时候将图片转为strng64
-  const String64Transformer = (image: File | null) => {
-    if (image) {
-      const reader = new FileReader();
+  // //Genrate的时候将图片转为strng64
+  // const String64Transformer = (image: File | null) => {
+  //   if (image) {
+  //     const reader = new FileReader();
 
-      reader.onloadend = () => {
-        setCompressedImage(reader.result as string);
-      };
-      reader.readAsDataURL(image);
-    }
-  };
+  //     reader.onloadend = () => {
+  //       setCompressedImage(reader.result as string);
+  //     };
+  //     reader.readAsDataURL(image);
+  //   }
+  // };
 
-  String64Transformer(
-    FileCompresser(selectedImage, [selectedImage]).compression
-  );
+  // String64Transformer(
+  //   FileCompresser(selectedImage, [selectedImage]).compression
+  // );
 
   //上传图片时触发事件
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +68,18 @@ const BookKeeping = () => {
   const [status, setStatus] = useState(0);
   const [message, setMessage] = useState<string | null>(null);
   const [err, setError] = useState("");
+
+  // 弹窗状态
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    console.log(status);
+    if (status === 200) {
+      setIsDialogOpen(true);
+      setStatus(0);
+    }
+  }, [status]);
 
   const onSubmit = (Data: FormData) => {
     console.log(Data);
@@ -124,6 +141,27 @@ const BookKeeping = () => {
           <FormErrorMessage>{message}</FormErrorMessage>
         </FormControl>
       </form>
+      <AlertDialog
+        isOpen={isDialogOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={() => setIsDialogOpen(false)}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Success
+            </AlertDialogHeader>
+
+            <AlertDialogBody>Expenditure records generated.</AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={() => setIsDialogOpen(false)}>
+                OK
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 };

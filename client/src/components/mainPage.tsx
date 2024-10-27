@@ -36,7 +36,7 @@ const MainPage = () => {
       <GridItem pl="2" bg="orange.300" area={"header"}>
         <Logo />
       </GridItem>
-      <GridItem pl="2" bg="pink.400" area={"nav"}>
+      <GridItem pl="2" bg="gray.800" area={"nav"}>
         <NavBar
           onSelectedPage={(buttonId) => setCurrentPage(buttonId)}
           selectedPage={currentPage}
